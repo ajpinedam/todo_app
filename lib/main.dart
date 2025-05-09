@@ -54,7 +54,7 @@ class _TodoListScrenState extends State<TodoListScren> {
           title: Text('Add new todo'),
           content: TextField(
             controller: textFieldController,
-            decoration: InputDecoration(hintText: 'Enter your to-do'),
+            decoration: InputDecoration(hintText: 'Enter your to-do item'),
           ),
           actions: <Widget>[
             TextButton(
