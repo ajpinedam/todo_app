@@ -40,11 +40,41 @@ class _TodoListScrenState extends State<TodoListScren> {
 
   void removeTodoItem(int index) {
     setState(() {
-      todos.remove(index);
+      todos.removeAt(index);
     });
   }
 
   //Futures
+
+  Future<void> displayText(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Add new todo'),
+          content: TextField(
+            controller: textFieldController,
+            decoration: InputDecoration(hintText: 'Enter your to-do'),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                addTodoItem(textFieldController.text);
+                Navigator.pop(context);
+              },
+              child: Text('Add to-do'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +94,10 @@ class _TodoListScrenState extends State<TodoListScren> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(todos[index]),
-                          IconButton(icon: Icon(Icons.delete), onPressed: null),
+                          IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () => removeTodoItem(index),
+                          ),
                         ],
                       ),
                     ),
@@ -72,7 +105,7 @@ class _TodoListScrenState extends State<TodoListScren> {
                 },
               ),
       floatingActionButton: FloatingActionButton(
-        onPressed: null,
+        onPressed: () => displayText(context),
         tooltip: 'Add Todo',
         child: Icon(Icons.add),
       ),
